@@ -1,0 +1,28 @@
+# Create file
+touch .gitignore
+```
+
+Add this content:
+```
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+
+# Data files (we'll version control the structure, not the data)
+data/*.json
+!data/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
