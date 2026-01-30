@@ -7,7 +7,8 @@ Command-line interface for managing tasks.
 import sys
 from tasks import add_task, get_all_tasks, get_task_by_id, delete_task
 from utils import format_task_list, validate_priority, confirm_action, get_user_input
-
+from tasks import (add_task, get_all_tasks, get_task_by_id, 
+                   delete_task, save_tasks_to_file, load_tasks_from_file)
 
 def show_menu():
     """Display the main menu."""
@@ -107,9 +108,14 @@ def handle_delete_task():
     else:
         print("❌ Deletion cancelled.")
 
-
 def main():
     """Main program loop."""
+    # Load existing tasks
+    if load_tasks_from_file():
+        print("✅ Loaded existing tasks from file.")
+    else:
+        print("📝 Starting with empty task list.")
+    
     print("Welcome to Task Manager!")
     print("Manage your tasks efficiently from the command line.")
     
@@ -120,13 +126,17 @@ def main():
         
         if choice == '1':
             handle_add_task()
+            save_tasks_to_file()  # Auto-save after adding
         elif choice == '2':
             handle_view_tasks()
         elif choice == '3':
             handle_complete_task()
+            save_tasks_to_file()  # Auto-save after completing
         elif choice == '4':
             handle_delete_task()
+            save_tasks_to_file()  # Auto-save after deleting
         elif choice == '5':
+            save_tasks_to_file()  # Save before exiting
             print("\n👋 Goodbye! Thanks for using Task Manager.")
             sys.exit(0)
         else:
