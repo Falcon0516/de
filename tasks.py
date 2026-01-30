@@ -28,6 +28,7 @@ class Task:
         self.completed = False
         self.created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.priority = priority
+        self.tags = []  # Add this line instead
         self.category = "general"  # Add this line
     
     def mark_complete(self):
