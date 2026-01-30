@@ -139,8 +139,8 @@ def main():
             save_tasks_to_file()  # Save before exiting
             print("\n👋 Goodbye! Thanks for using Task Manager.")
             sys.exit(0)
-        else:
-            print("❌ Invalid print choice! Please enter 1-5.")
+        else: 
+            print("")
 #this is a change
 
 if __name__ == "__main__":
