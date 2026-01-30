@@ -23,19 +23,12 @@ class Task:
     """
     
     def __init__(self, task_id: int, title: str, priority: str = "medium"):
-        """
-        Initialize a new task.
-        
-        Args:
-            task_id: Unique ID for this task
-            title: Description of the task
-            priority: Priority level (default: medium)
-        """
         self.id = task_id
         self.title = title
         self.completed = False
         self.created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.priority = priority
+        self.tags = []  # Add this line instead
     
     def mark_complete(self):
         """Mark this task as completed."""
