@@ -3,7 +3,8 @@ Task Management Module
 
 This module defines the Task class and functions to manage tasks.
 """
-
+import json
+import os
 import json
 from datetime import datetime
 from typing import List, Optional
@@ -145,3 +146,65 @@ def delete_task(task_id: int) -> bool:
         tasks.remove(task)
         return True
     return False
+#to do: implement save_tasks and load_tasks functionss
+DATA_FILE = "data/tasks.json"
+
+
+def save_tasks_to_file():
+    """
+    Save all tasks to JSON file.
+    
+    This function converts all Task objects to dictionaries
+    and writes them to a JSON file for persistence.
+    """
+    # Create data directory if it doesn't exist
+    os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+    
+    # Convert all tasks to dictionaries
+    task_dicts = [task.to_dict() for task in tasks]
+    
+    # Write to file
+    try:
+        with open(DATA_FILE, 'w') as f:
+            json.dump({
+                'tasks': task_dicts,
+                'next_id': next_id
+            }, f, indent=2)
+        return True
+    except Exception as e:
+        print(f"Error saving tasks: {e}")
+        return False
+
+
+def load_tasks_from_file():
+    """
+    Load tasks from JSON file.
+    
+    This function reads the JSON file and recreates
+    Task objects from the saved data.
+    """
+    global tasks, next_id
+    
+    # Check if file exists
+    if not os.path.exists(DATA_FILE):
+        return False
+    
+    try:
+        with open(DATA_FILE, 'r') as f:
+            data = json.load(f)
+        
+        # Clear current tasks
+        tasks.clear()
+        
+        # Recreate Task objects
+        for task_dict in data['tasks']:
+            task = Task.from_dict(task_dict)
+            tasks.append(task)
+        
+        # Restore next_id
+        next_id = data['next_id']
+        
+        return True
+    except Exception as e:
+        print(f"Error loading tasks: {e}")
+        return False
